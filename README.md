@@ -4,6 +4,7 @@ deepstack manager
 Simple python script to list, register or delete faces in deepstack instance. Allows registering multiple images at a time. 
 
 $ dsm -h
+
 usage: dsm [-h] [-H HOST] {register,delete,list} ...
 
 Deepstack management tool.
@@ -31,6 +32,7 @@ optional arguments:
 
 
 $ dsm delete -h
+
 usage: dsm delete [-h] name
 
 positional arguments:
