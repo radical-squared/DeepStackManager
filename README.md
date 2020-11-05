@@ -19,6 +19,7 @@ optional arguments:
 
 
 $ dsm register -h
+
 usage: dsm register [-h] [-m MASK | -p PATH] name
 
 positional arguments:
