@@ -2,10 +2,8 @@
 
 import numpy as np
 import cv2
-from PIL import Image
 from time import sleep
-from datetime import datetime
-import requests, json, random, logging
+import requests, json
 import glob
 import argparse
 import os
@@ -21,7 +19,7 @@ r_parser.add_argument('name', help='Name to register')
 
 
 group = r_parser.add_mutually_exclusive_group(required=False)
-group.add_argument('-m','--mask', default="*.jpg", help='Mask for files to include')
+group.add_argument('-m','--mask', default="*.jpg", help='Mask for files to include e.g. "*.jpg"')
 group.add_argument('-p','--path', help="Path")
 
 d_parser = subparser.add_parser('delete')
@@ -43,7 +41,7 @@ if args.action == "register":
     for file in glob.glob(path):
         img = cv2.imread(file)
         _, buf = cv2.imencode(".jpg", img, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
-        images["image"+str(i)] = buf.tobytes()      #= open(file, "rb").read()
+        images["image"+str(i)] = buf.tobytes()
         i += 1
 
     response = requests.post("http://"+args.host+"/v1/vision/face/register", files=images, data={"userid":args.name}).json()
