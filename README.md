@@ -1,6 +1,6 @@
 # deepstack manager
 
-Simple python script to list, register or delete faces in deepstack instance. Allows registering multiple images at a time. 
+Simple python script to list, register or delete faces in deepstack instance. Makes it easy to register face with multiple images by submitting all image files present in current directory.  
 
 <pre>
 
