@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-import numpy as np
-import cv2
+from PIL import Image
 from time import sleep
 import requests, json
 import glob
 import argparse
 import os
+import io
 
 
 DEEPSTACK_ADDRESS="localhost:5000"
@@ -20,7 +20,7 @@ r_parser.add_argument('name', help='Name to register')
 
 group = r_parser.add_mutually_exclusive_group(required=False)
 group.add_argument('-m','--mask', default="*.jpg", help='Mask for files to include e.g. "*.jpg"')
-group.add_argument('-p','--path', help="Path")
+group.add_argument('-p','--path', default=".", help="Path")
 
 d_parser = subparser.add_parser('delete')
 d_parser.add_argument('name', help='Name to delete')
@@ -32,20 +32,22 @@ args = parser.parse_args()
 if args.action == "register":
 
     if args.path:
-       path = args.path+args.mask
+       path = args.path + "/" + args.mask
     else:
-        path = os.getcwd()+"/"+args.mask
-    
+        path = os.getcwd() + "/" + args.mask
+
+    output = io.BytesIO()
     images = {}
-    i = 1
+    i = 0
     for file in glob.glob(path):
-        img = cv2.imread(file)
-        _, buf = cv2.imencode(".jpg", img, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
-        images["image"+str(i)] = buf.tobytes()
+        img = Image.open(file)
+        img.save(output, format='JPEG', quality=100, subsampling=0)
+        images["image"+str(i)] = output.getvalue()
         i += 1
 
-    response = requests.post("http://"+args.host+"/v1/vision/face/register", files=images, data={"userid":args.name}).json()
-    print(response)
+    if i > 0:
+      response = requests.post("http://"+args.host+"/v1/vision/face/register", files=images, data={"userid":args.name}).json()
+      print(response)
 
 elif args.action == "delete":
     response = requests.post("http://"+args.host+"/v1/vision/face/delete", data={"userid":args.name}).json()
