@@ -1,6 +1,6 @@
 # deepstack manager
 
-Simple commandline tool to manage faces "memory" of deepstack instance. It provides simple means to register, delete and list faces as well as submit images for face recognition or object detection. 
+Simple command-line tool to manage faces "memory" of deepstack instance. It provides simple means to register, delete and list faces as well as submit images for face recognition or object detection. 
 
 The script simplifies registering face with multiple images by submitting all image files present in current directory.  
 
