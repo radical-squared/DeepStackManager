@@ -1,20 +1,23 @@
 # deepstack manager
 
-Simple python script to list, register or delete faces in deepstack instance. Makes it easy to register face with multiple images by submitting all image files present in current directory.  
+Simple python script to manage faces "memory" of deepstack instance. It provides simple means to register, delete and list faces as well as submit images for face recognition or object detection. 
+
+The script simplifies registering face with multiple images by submitting all image files present in current directory.  
 
 <pre>
 
 $ dsm -h
-usage: dsm [-h] [-H HOST] {register,delete,list} ...
+usage: dsm [-h] [-H HOST] {register,recognize,detect,delete,list} ...
 
 Deepstack management tool.
 
 positional arguments:
-  {register,delete,list}
+  {register,recognize,detect,delete,list}
 
 optional arguments:
   -h, --help            show this help message and exit
   -H HOST, --host HOST  Address of deepstack server
+
 
 
 $ dsm register -h
@@ -29,11 +32,25 @@ optional arguments:
   -p PATH, --path PATH  Path
 
 
+
+$ dsm recognize -h
+usage: dsm recognize [-h] file
+
+positional arguments:
+  file        File to submit for face recognition
+
+
+
+$ dsm detect -h
+usage: dsm detect [-h] file
+
+positional arguments:
+  file        File to submit for object detection
+
+
+
 $ dsm delete -h
 usage: dsm delete [-h] name
 
 positional arguments:
   name        Name to delete
-
-optional arguments:
-  -h, --help  show this help message and exit
